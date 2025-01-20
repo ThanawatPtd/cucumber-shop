@@ -3,8 +3,10 @@ package ku.shop;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.java.ja.但し;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BuyStepdefs {
 
@@ -28,9 +30,15 @@ public class BuyStepdefs {
         order.addItem(prod, quantity);
     }
 
+    @When("Check stock product {string} quantity {int}")
+    public void check_stock(String name, int quantity) {
+        Product prod = catalog.getProduct(name);
+        assertThrows(IllegalArgumentException.class, ()->
+                order.addItem(prod, quantity));
+    }
+
     @Then("total should be {float}")
     public void total_should_be(double total) {
-        assertEquals(total, order.getTotal());
-    }
+        assertEquals(total, order.getTotal()); }
 }
 

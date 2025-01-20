@@ -14,6 +14,9 @@ public class Order {
     }
 
     public void addItem(Product prod, int quantity) {
+        if(prod.getStock() < quantity){
+            throw new IllegalArgumentException("Sorry, not enough stock");
+        }
         items.add(new OrderItem(prod, quantity));
         prod.cutStock(quantity);
     }
